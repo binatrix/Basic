@@ -1,3 +1,8 @@
+extern String evaluate(String expr);
+extern void PrintAndWebOut(String itemToBePrinted);
+extern void SetMeThatVar(String VariableNameToFind, String NewContents, int format);
+extern String VarialbeLookup(String VariableNameToFind);
+
 class basicVariable
 {
   private:
@@ -479,6 +484,3 @@ class DOLOOP
   }
     
 } doLoopStack;
-
-
-

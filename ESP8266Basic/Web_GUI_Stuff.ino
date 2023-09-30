@@ -1,3 +1,5 @@
+#include "tft.on.h"
+
 String RunningProgramGui()
 {
 	if (WebGuiOff == 2)
@@ -21,9 +23,9 @@ String RunningProgramGui()
     RunBasicTillWait();
   }
  String WebOut;
- if (BasicDebuggingOn == 1) WebOut = String(MobileFreindlyWidth) + String(DebugPage)  + HTMLout + String(F("</div>"));
- if (BasicDebuggingOn == 0 & RunningProgram == 1) WebOut = String(MobileFreindlyWidth) + String(F("<script src='WebSockets.js'></script><script src='/wsport.js'></script>"))  + HTMLout;
- if (BasicDebuggingOn == 0 & RunningProgram == 0) WebOut = String(MobileFreindlyWidth) +  HTMLout;
+ if (BasicDebuggingOn == 1) WebOut = P_STR(P_MobileFreindlyWidth) + P_STR(P_DebugPage)  + HTMLout + String(F("</div>"));
+ if (BasicDebuggingOn == 0 & RunningProgram == 1) WebOut = P_STR(P_MobileFreindlyWidth) + String(F("<script src='WebSockets.js'></script><script src='/wsport.js'></script>"))  + HTMLout;
+ if (BasicDebuggingOn == 0 & RunningProgram == 0) WebOut = P_STR(P_MobileFreindlyWidth) +  HTMLout;
 
   for (int i = TotalNumberOfVariables - 1; i >= 0; i--)
   {
@@ -115,7 +117,7 @@ void SendAllTheVars()
 String BasicGraphics()
 {
   String BasicGraphicsOut;
-  BasicGraphicsOut = GraphicsStartCode;
+  BasicGraphicsOut = P_STR(P_GraphicsStartCode);
   BasicGraphicsOut.replace(F("*wid*"),  String(GraphicsEliments[0][1]));
   BasicGraphicsOut.replace(F("*hei*"),  String(GraphicsEliments[0][2]));
 
@@ -124,28 +126,28 @@ String BasicGraphics()
   {
     if (GraphicsEliments[i][0] == 1) //For Line
     {
-      GraphicsEliment = GraphicsLineCode;
+      GraphicsEliment = P_STR(P_GraphicsLineCode);
     }
 
     if (GraphicsEliments[i][0] == 2) //For Circle
     {
-      GraphicsEliment = GraphicsCircleCode;
+      GraphicsEliment = P_STR(P_GraphicsCircleCode);
     }
 
 
     if (GraphicsEliments[i][0] == 3) //For ELLIPSE
     {
-      GraphicsEliment = GraphicsEllipseCode;
+      GraphicsEliment = P_STR(P_GraphicsEllipseCode);
     }
 
     if (GraphicsEliments[i][0] == 4) //For rectangle
     {
-      GraphicsEliment = GraphicsRectangleCode;
+      GraphicsEliment = P_STR(P_GraphicsRectangleCode);
     }
 
     if (GraphicsEliments[i][0] == 5) //For rectangle
     {
-      GraphicsEliment = GraphicsTextCode;
+      GraphicsEliment = P_STR(P_GraphicsTextCode);
     }	
 	
 	
@@ -381,4 +383,3 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
       break;
   }
 }
-

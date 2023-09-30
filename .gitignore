@@ -1,2 +1,4 @@
 Flasher/esptool.exe
 *.orig
+release/
+Tools/

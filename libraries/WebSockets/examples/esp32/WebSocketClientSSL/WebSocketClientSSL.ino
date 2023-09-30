@@ -1,26 +1,40 @@
 /*
- * WebSocketClient.ino
+ * WebSocketClientSSL.ino
  *
- *  Created on: 24.05.2015
+ *  Created on: 10.12.2015
+ *
+ *  note SSL is only possible with the ESP8266
  *
  */
 
 #include <Arduino.h>
 
-#include <ESP8266WiFi.h>
-#include <ESP8266WiFiMulti.h>
+#include <WiFi.h>
+#include <WiFiMulti.h>
+#include <WiFiClientSecure.h>
 
 #include <WebSocketsClient.h>
 
-#include <Hash.h>
 
-ESP8266WiFiMulti WiFiMulti;
+WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
-
 
 #define USE_SERIAL Serial1
 
-void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
+void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
+	const uint8_t* src = (const uint8_t*) mem;
+	USE_SERIAL.printf("\n[HEXDUMP] Address: 0x%08X len: 0x%X (%d)", (ptrdiff_t)src, len, len);
+	for(uint32_t i = 0; i < len; i++) {
+		if(i % cols == 0) {
+			USE_SERIAL.printf("\n[0x%08X] 0x%08X: ", (ptrdiff_t)src, i);
+		}
+		USE_SERIAL.printf("%02X ", *src);
+		src++;
+	}
+	USE_SERIAL.printf("\n");
+}
+
+void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 
 
     switch(type) {
@@ -30,7 +44,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
         case WStype_CONNECTED:
             {
                 USE_SERIAL.printf("[WSc] Connected to url: %s\n",  payload);
-				
+
 			    // send message to server when Connected
 				webSocket.sendTXT("Connected");
             }
@@ -42,12 +56,18 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
 			// webSocket.sendTXT("message here");
             break;
         case WStype_BIN:
-            USE_SERIAL.printf("[WSc] get binary lenght: %u\n", lenght);
-            hexdump(payload, lenght);
+            USE_SERIAL.printf("[WSc] get binary length: %u\n", length);
+            hexdump(payload, length);
 
             // send data to server
-            // webSocket.sendBIN(payload, lenght);
+            // webSocket.sendBIN(payload, length);
             break;
+		case WStype_ERROR:			
+		case WStype_FRAGMENT_TEXT_START:
+		case WStype_FRAGMENT_BIN_START:
+		case WStype_FRAGMENT:
+		case WStype_FRAGMENT_FIN:
+			break;
     }
 
 }
@@ -76,8 +96,7 @@ void setup() {
         delay(100);
     }
 
-    webSocket.begin("192.168.0.123", 81);
-    //webSocket.setAuthorization("user", "Password"); // HTTP Basic Authorization
+    webSocket.beginSSL("192.168.0.123", 81);
     webSocket.onEvent(webSocketEvent);
 
 }

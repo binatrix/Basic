@@ -1,3 +1,5 @@
+#include "tft.on.h"
+
 // Modified by DanBicks added OLED display to ESP01 using cheap Ebay 0.96" display
 // Lightweight Mike-Rankin OLED routines added in this project, Credits to Mike for this.
 // http://www.esp8266.com/viewtopic.php?f=29&t=3256

@@ -1,3 +1,4 @@
+#include "tft.on.h"
 #define TFT_DEMO
 #include "expression_parser_string.h"
 
@@ -252,7 +253,7 @@ int function_callback( void *user_data, const char *name, const int num_args, co
   else if ( fname == F("version") && num_args == 0 ) {
     // example of the id()
     // set return value
-    *value_str = String(BasicVersion);
+    *value_str = P_STR(P_BasicVersion);
     return PARSER_STRING;
   }
   else if ( fname == F("htmlid") && num_args == 0 ) {
@@ -586,21 +587,21 @@ int function_callback( void *user_data, const char *name, const int num_args, co
 
   }
   else if ( fname == F("mqtt.setup") && num_args >= 1 ) {
-	int MQTTport = 1883;
-
-	if (num_args == 2) MQTTport = args[1];
-
-	//MQTTclient.setServer(String(*args_str[0]).c_str(), MQTTport);
-	MQTTclient.setServer("broker.mqtt-dashboard.com", MQTTport);
-
-	MQTTActivated = 1;
-	Serial.println(String("Connected to " + String(*args_str[0])));
+	  int MQTTport = 1883;
+    MQTTUser = "";
+    MQTTPass = "";
+    MQTTServer = String(*args_str[0]);
+    if (num_args >= 2) MQTTport = args[1];
+    if (num_args >= 3) MQTTUser = String(*args_str[2]);
+    if (num_args == 4) MQTTPass = String(*args_str[3]);
+	  MQTTclient.setServer(MQTTServer.c_str(), MQTTport);
+	  MQTTActivated = 1;
+	  Serial.println(String("Connecting to ") + MQTTServer);
     *value_str = *args_str[0];
     return PARSER_STRING;
   }
   else if ( fname == F("mqtt.subscribe") && num_args >= 1 ) {
     MQTTSubscribeTopic = *args_str[0];
-    //MQTTclient.subscribe(String(*args_str[0]).c_str());
     *value_str = *args_str[0];
     return PARSER_STRING;
   }
@@ -609,8 +610,9 @@ int function_callback( void *user_data, const char *name, const int num_args, co
     return PARSER_STRING;
   }
   else if ( fname == F("mqtt.publish")  && num_args >= 1 ) {
-	MQTTPublishTopic = *args_str[0];
+	  MQTTPublishTopic = *args_str[0];
     MQTTPublishMSG = *args_str[1];
+    MQTTPublishRetain = (num_args == 3 ? args[2] == 1 : false);
     *value_str = MQTTlatestMsg;
     return PARSER_STRING;
   }
@@ -747,7 +749,7 @@ int function_callback( void *user_data, const char *name, const int num_args, co
     // set return value
     if (args_str[0] != NULL)
     {
-		if (StringToIP(String(*args_str[0])) != (0,0,0,0))
+		if (StringToIP(String(*args_str[0])) != IPAddress(0,0,0,0))
 		{
 			*value = Ping.ping( StringToIP(String(*args_str[0])));
 		}

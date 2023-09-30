@@ -1,3 +1,5 @@
+extern byte sendEmail(String EmailTo, String EmailFrom, String EmailSubject, String EmailBody);
+
 parser_data pd;
 int num_args;
 PARSER_PREC args[PARSER_MAX_ARGUMENT_COUNT];
@@ -507,17 +509,17 @@ void ExicuteTheCurrentLine()
     switch (num_args)
     {
       case 1:
-        swSer = new SoftwareSerial(12, 2, false, 256);  // pin 12 RX, pin 2 TX, no inverse logic, 256 bytes buffer
+        swSer = new SoftwareSerial(12, 2, false); //, 256);  // pin 12 RX, pin 2 TX, no inverse logic, 256 bytes buffer
         swSer->begin(args[0]);
         break;
 
       case 2:
-        swSer = new SoftwareSerial(12, args[1], false, 256);  // pin 12 RX, pin x TX, no inverse logic, 256 bytes buffer
+        swSer = new SoftwareSerial(12, args[1], false); //, 256);  // pin 12 RX, pin x TX, no inverse logic, 256 bytes buffer
         swSer->begin(args[0]);
         break;
 
       case 3:
-        swSer = new SoftwareSerial(args[2], args[1], false, 256);  // pin y RX, pin x TX, no inverse logic, 256 bytes buffer
+        swSer = new SoftwareSerial(args[2], args[1], false); //, 256);  // pin y RX, pin x TX, no inverse logic, 256 bytes buffer
         swSer->begin(args[0]);
         break;
     }
@@ -652,7 +654,7 @@ void ExicuteTheCurrentLine()
   if (Param0 == F("image"))
   {
 
-    String tempInfo = GenerateIDtag(normalImage);
+    String tempInfo = GenerateIDtag(P_STR(P_normalImage));
     tempInfo.replace(F("name"), evaluate(Param1));
     AddToWebOut(tempInfo);
     //Serial.print(HTMLout);
@@ -663,7 +665,7 @@ void ExicuteTheCurrentLine()
   if (Param0 == F("javascript"))
   {
     NewGuiItemAddedSinceLastWait = 1;
-    String tempInfo = javascript;
+    String tempInfo = P_STR(P_javascript);
     tempInfo.replace(F("name"), evaluate(Param1));
     HTMLout += tempInfo;
     //Serial.print(HTMLout);
@@ -683,7 +685,7 @@ void ExicuteTheCurrentLine()
   if (Param0 == F("css"))
   {
     NewGuiItemAddedSinceLastWait = 1;
-    String tempInfo = CSSscript;
+    String tempInfo = P_STR(P_CSSscript);
     tempInfo.replace(F("name"), evaluate(Param1));
     HTMLout += tempInfo;
     //Serial.print(HTMLout);
@@ -694,7 +696,7 @@ void ExicuteTheCurrentLine()
 
   if (Param0 == F("textbox"))
   {
-    String tempTextBox = GenerateIDtag(TextBox);
+    String tempTextBox = GenerateIDtag(P_STR(P_TextBox));
     VarialbeLookup(Param1);
     if (VariableLocated == 0)
     {
@@ -712,7 +714,7 @@ void ExicuteTheCurrentLine()
   if (Param0 == F("passwordbox"))
   {
 
-    String tempTextBox = GenerateIDtag(passwordbox);
+    String tempTextBox = GenerateIDtag(P_STR(P_passwordbox));
     VarialbeLookup(Param1);
     if (VariableLocated == 0)
     {
@@ -730,7 +732,7 @@ void ExicuteTheCurrentLine()
 
   if (Param0 == F("slider"))
   {
-    String tempSlider = GenerateIDtag(Slider);
+    String tempSlider = GenerateIDtag(P_STR(P_Slider));
     VarialbeLookup(args_var[0]);
 	
 	VarialbeLookup(Param1);
@@ -752,7 +754,7 @@ void ExicuteTheCurrentLine()
 
   if (Param0 == F("meter"))
   {
-    String tempMeter = GenerateIDtag(meter);
+    String tempMeter = GenerateIDtag(P_STR(P_meter));
 
 	VarialbeLookup(Param1);
     if (VariableLocated == 0)
@@ -773,7 +775,7 @@ void ExicuteTheCurrentLine()
   if (Param0 == F("cssid"))
   {
 	Param1 = evaluate(Param1);
-    String tempCSSid = CSSid;
+    String tempCSSid = P_STR(P_CSSid);
     tempCSSid.replace(F("myid"),  Param1);
 	Param2 = evaluate(Param2);
     tempCSSid.replace(F("*style*"),  Param2);
@@ -786,7 +788,7 @@ void ExicuteTheCurrentLine()
   if (Param0 == F("cssclass"))
   {
 	Param1 = evaluate(Param1);
-    String tempCSSclass = CSSclass;
+    String tempCSSclass = P_STR(P_CSSclass);
     tempCSSclass.replace(F("myid"),  Param1);
 	Param2 = evaluate(Param2);
     tempCSSclass.replace(F("*style*"),  Param2);
@@ -799,8 +801,8 @@ void ExicuteTheCurrentLine()
   if (Param0 == F("dropdown") | Param0 == F("listbox"))
   {
     r = ExtractArguments(inData);
-    String tempDropDownList = GenerateIDtag(DropDownList);
-    String tempDropDownListOpptions  = DropDownListOpptions;
+    String tempDropDownList = GenerateIDtag(P_STR(P_DropDownList));
+    String tempDropDownListOpptions  = P_STR(P_DropDownListOpptions);
     String TempItems;
     String TempBla;
 
@@ -810,7 +812,7 @@ void ExicuteTheCurrentLine()
 
     for (int i = 0; i <= 20; i++)
     {
-      tempDropDownListOpptions  = DropDownListOpptions;
+      tempDropDownListOpptions  = P_STR(P_DropDownListOpptions);
       TempBla = getValue(String(*args_str[1] + ","), ',', i);
       TempBla.replace(",", "");
       if (TempBla != "")
@@ -858,7 +860,7 @@ void ExicuteTheCurrentLine()
       HaltBasic(F("The arguments must be 2!"));
       return;
     }
-    String tempButton = GenerateIDtag(GOTObutton);
+    String tempButton = GenerateIDtag(P_STR(P_GOTObutton));
     tempButton.replace(F("gotonotext"),  evaluate(Params[0]));
 	
 	
@@ -883,7 +885,7 @@ void ExicuteTheCurrentLine()
   {
     numberButtonInUse++;
 	Param1 = evaluate(Param1);
-    String tempButton = GenerateIDtag(GOTOimagebutton);
+    String tempButton = GenerateIDtag(P_STR(P_GOTOimagebutton));
     if (Param1.startsWith(F("http://")) | Param1.startsWith(F("HTTP://")) )tempButton.replace(F("/file?file="), "");
     tempButton.replace(F("gotonotext"),  Param1);
 
@@ -1188,6 +1190,7 @@ void ExicuteTheCurrentLine()
 	MQTTSubscribeTopic = "";
 	MQTTPublishTopic = "";
 	MQTTPublishMSG = "";
+  MQTTPublishRetain = false;
 	MQTTTimeFromLastCheck = 0;
 	refreshBranch = "";
 	
