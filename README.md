@@ -23,6 +23,36 @@ Once the firmware is installed basic programming is done with a standard web bro
 No usb to serial cables needed. Can be programmed from any device that has a modern web browser such as chrome.
 Even a cell phone or cheap tablet can be used to program your ESP8266 based project with out cables once the firmware is installed. 
 
+### Version 3.2
+
+Updates on this version:
+
+- OLED changes:
+    - Disabled auto-display when draw to screen to improve performance. To draw to screen you must invoke "oled.display()"
+    -   Add new functions:
+        - oled.width(string), get the string width with current font
+        - oled.align(align), set the text alignment on screen:
+            - 0, TEXT_ALIGN_LEFT
+            - 1, TEXT_ALIGN_RIGHT
+            - 2, TEXT_ALIGN_CENTER
+            - 3, TEXT_ALIGN_CENTER_BOTH
+        - oled.flip(), flip screen vertically
+        - oled.display(), draw content to screen
+```
+oled.align(2) 'Centered
+oled.print("Hello", 10, 10)
+oled.display()
+```
+- Nokia RTTTL (music) functions. Buzzer needed
+    - sound.pin(pin), set the speaker pin
+    - sound.play(rtttl), play the RTTTL song
+    - sound.stop(), stop current playing song
+```
+song = "gameover:d=4,o=4,b=200:8c5,4p,8g4,4p,4e4,6a4,6b4,6a4,6g#4,6a#4,6g#4,4g4,4f4,2g4"
+sound.pin(16)
+sound.play(song)
+```
+
 ### Version 3.1
 
 Updates on this version:

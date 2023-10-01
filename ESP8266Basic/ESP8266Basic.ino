@@ -325,6 +325,9 @@ int dst = 0;
 
 FSInfo fs_info;
 
+#include "Sound.h"
+Sound sound;
+
 void setup() {
   //  dht.begin();
   //  pixels.begin();
@@ -1165,6 +1168,8 @@ void loop()
 	  } 
     MQTTclient.loop();
   }
+
+  sound.loop();
 }
 
 
