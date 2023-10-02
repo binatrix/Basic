@@ -47,11 +47,16 @@ oled.display()
     - sound.pin(pin), set the speaker pin
     - sound.play(rtttl), play the RTTTL song
     - sound.stop(), stop current playing song
-    - [soundbranch], event when music stop playing TODO!!!!
+    - soundBranch, callback when music stop playing. Optional
 ```
+soundBranch [EndSong]
 song = "Star Trek:d=4,o=5,b=63:8f.,16a#,d#.6,8d6,16a#.,16g.,16c.6,f6"
 sound.pin(16)
 sound.play(song)
+...
+[EndSong]
+print "Song stopped"
+wait
 ```
 
 - PIN changes:

@@ -327,6 +327,8 @@ FSInfo fs_info;
 
 #include "Sound.h"
 Sound sound;
+String SoundBranch;
+void soundCallback();
 
 void setup() {
   //  dht.begin();
@@ -346,7 +348,7 @@ void setup() {
   server = new ESP8266WebServer(listenport.toInt());
   webSocket = new WebSocketsServer(WebSocketslistenport.toInt());
   
-  
+  sound.setCallback(soundCallback);  
 
   //Serial.setDebugOutput(true);
   WiFi.setAutoConnect(false) ;
@@ -1726,4 +1728,14 @@ void MQTTreconnect() {
   	  delay(10);
   	}
   } 
+}
+
+void soundCallback() {
+	if (SoundBranch != "")
+	{     
+		inData = String(" goto " + SoundBranch + " ");
+		WaitForTheInterpertersResponse = 0;
+		ExicuteTheCurrentLine();
+		runTillWaitPart2();
+	} 
 }

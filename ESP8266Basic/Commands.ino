@@ -419,6 +419,13 @@ void ExicuteTheCurrentLine()
     MQTTBranch = Param1;
     return;
   }
+
+  if (Param0 == F("soundbranch"))
+  {
+    SoundBranch = Param1;
+    return;
+  }
+
   if (Param0 == F("timercb"))
   {
     TimerCBtime = 0;
@@ -1130,6 +1137,8 @@ void ExicuteTheCurrentLine()
     MQTTTimeFromLastCheck = 0;
     refreshBranch = "";
 
+    SoundBranch = "";
+    
     PrintAndWebOut(F("Done..."));
     return;
   }
@@ -1169,6 +1178,8 @@ void ExicuteTheCurrentLine()
     MQTTTimeFromLastCheck = 0;
     refreshBranch = "";
 
+    SoundBranch = "";
+    
     return;
   }
 
@@ -1226,18 +1237,6 @@ void ExicuteTheCurrentLine()
       return;
     }
     SendErrorMsg(String(F("TELNETBRANCH Label not found:")) + Param1);
-
-    return;
-  }
-
-  if (Param0 == F("soundbranch"))
-  {
-    if ((r = JumpList.getPos(Param1)) != -1)
-    {
-      // msgbranch = r - 1;
-      return;
-    }
-    SendErrorMsg(String(F("SOUNDBRANCH Label not found:")) + Param1);
 
     return;
   }
