@@ -1215,10 +1215,10 @@ void RunBasicTillWait()
   {
 	delay(0);
 	//Serial.println(pinnn);
-	if ((PinListOfStatus[pinnn] != "po") & ( PinListOfStatus[pinnn] != "pi") & (PinListOfStatus[pinnn] != "pwi") & (PinListOfStatus[pinnn] != "pwo") & (PinListOfStatus[pinnn] != "servo") & ( PinListOfStatus[pinnn] != ""))
+	if ((PinListOfStatus[pinnn] != "po") & ( PinListOfStatus[pinnn] != "pi") & ( PinListOfStatus[pinnn] != "pip") & (PinListOfStatus[pinnn] != "pwi") & (PinListOfStatus[pinnn] != "pwo") & (PinListOfStatus[pinnn] != "servo") & ( PinListOfStatus[pinnn] != ""))
 	{
 	  //Serial.println("Foud interupt pin");
-	  if ( PinListOfStatusValues[pinnn] != UniversalPinIO("pi", String(pinnn), 0))
+	  if ( PinListOfStatusValues[pinnn] != UniversalPinIO("pi", String(pinnn), 0) | PinListOfStatusValues[pinnn] != UniversalPinIO("pip", String(pinnn), 0))
 	  {
 		inData = String(" goto " + PinListOfStatus[pinnn] + " ");
 		WaitForTheInterpertersResponse = 0;

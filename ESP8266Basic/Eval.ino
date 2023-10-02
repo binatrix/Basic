@@ -1119,18 +1119,18 @@ int function_callback(void *user_data, const char *name, const int num_args, con
       uint8_t model;
       switch (num_args)
       {
-        case 1:
-          model = args[0];
-          pin = 5;
-          break;
-        case 2:
-          model = args[0];
-          pin = args[1];
-          break;
-        default:
-          model = 21; // default DHT21
-          pin = 5;    // default pin
-          break;
+      case 1:
+        model = args[0];
+        pin = 5;
+        break;
+      case 2:
+        model = args[0];
+        pin = args[1];
+        break;
+      default:
+        model = 21; // default DHT21
+        pin = 5;    // default pin
+        break;
       }
       if (dht != NULL)
         delete dht;
@@ -1297,15 +1297,15 @@ int function_callback(void *user_data, const char *name, const int num_args, con
       SPI.begin();
       switch (num_args)
       {
-        case 1: // spi.setup(speed)
-          SPI.beginTransaction(SPISettings(args[0], MSBFIRST, SPI_MODE0));
-          break;
-        case 2: // spi.setup(speed, SPI_MODE)
-          SPI.beginTransaction(SPISettings(args[0], MSBFIRST, args[1]));
-          break;
-        case 3: // spi.setup(speed, SPI_MODE, MSBFIRST)
-          SPI.beginTransaction(SPISettings(args[0], args[2], args[1]));
-          break;
+      case 1: // spi.setup(speed)
+        SPI.beginTransaction(SPISettings(args[0], MSBFIRST, SPI_MODE0));
+        break;
+      case 2: // spi.setup(speed, SPI_MODE)
+        SPI.beginTransaction(SPISettings(args[0], MSBFIRST, args[1]));
+        break;
+      case 3: // spi.setup(speed, SPI_MODE, MSBFIRST)
+        SPI.beginTransaction(SPISettings(args[0], args[2], args[1]));
+        break;
       }
       // set return value
       *value = 0;
@@ -1498,42 +1498,42 @@ int function_callback(void *user_data, const char *name, const int num_args, con
     {
       // function tft.fill(color)   fill the screen with the color (565)
       display.clear();
-      //display.display();
+      // display.display();
       return PARSER_TRUE;
     }
     else if (fname == F("line") && num_args == 4)
     {
       // function tft.rect(x, y, width, height, color)
       display.drawLine(args[0], args[1], args[2], args[3]);
-      //display.display();
+      // display.display();
       return PARSER_TRUE;
     }
     else if (fname == F("rect") && num_args == 4)
     {
       // function tft.rect(x, y, width, height, color)
       display.drawRect(args[0], args[1], args[2], args[3]);
-      //display.display();
+      // display.display();
       return PARSER_TRUE;
     }
     else if (fname == F("rect.fill") && num_args == 4)
     {
       // function tft.rect.fill(x, y, width, height, color)
       display.fillRect(args[0], args[1], args[2], args[3]);
-      //display.display();
+      // display.display();
       return PARSER_TRUE;
     }
     else if (fname == F("circle") && num_args == 3)
     {
       // function tft.circle(x, y, radius, color)
       display.drawCircle(args[0], args[1], args[2]);
-      //display.display();
+      // display.display();
       return PARSER_TRUE;
     }
     else if (fname == F("circle.fill") && num_args == 3)
     {
       // function tft.circle.fill(x, y, radius, color)
       display.fillCircle(args[0], args[1], args[2]);
-      //display.display();
+      // display.display();
       return PARSER_TRUE;
     }
 
@@ -1555,14 +1555,14 @@ int function_callback(void *user_data, const char *name, const int num_args, con
       if (args[1] != NULL & args[2] != NULL & args_str[0] != NULL)
       {
         display.drawString(args[1], args[2], *args_str[0]);
-        //display.display();
+        // display.display();
       }
       else if (args_str[1] != NULL)
       {
         display.drawString(0, 0, *args_str[0]);
-        //display.display();
+        // display.display();
       }
-      //display.display();
+      // display.display();
       return PARSER_STRING;
     }
 
@@ -1575,11 +1575,20 @@ int function_callback(void *user_data, const char *name, const int num_args, con
     {
       OLEDDISPLAY_TEXT_ALIGNMENT align = TEXT_ALIGN_LEFT;
       int ialign = args[0];
-      switch(ialign) {
-        case 0: align = TEXT_ALIGN_LEFT; break;
-        case 1: align = TEXT_ALIGN_RIGHT; break;
-        case 2: align = TEXT_ALIGN_CENTER; break;
-        case 3: align = TEXT_ALIGN_CENTER_BOTH; break;
+      switch (ialign)
+      {
+      case 0:
+        align = TEXT_ALIGN_LEFT;
+        break;
+      case 1:
+        align = TEXT_ALIGN_RIGHT;
+        break;
+      case 2:
+        align = TEXT_ALIGN_CENTER;
+        break;
+      case 3:
+        align = TEXT_ALIGN_CENTER_BOTH;
+        break;
       }
       display.setTextAlignment(align);
       return PARSER_STRING;
@@ -1703,21 +1712,21 @@ int function_callback(void *user_data, const char *name, const int num_args, con
       // function tft.text.size(size)
       switch ((int)args[0])
       {
-        case 0:
-          tft->setFont(NULL);
-          break;
-        case 1:
-          tft->setFont(&FreeSerifBold9pt7b);
-          break;
-        case 2:
-          tft->setFont(&FreeSerifBold12pt7b);
-          break;
-        case 3:
-          tft->setFont(&FreeSerifBold18pt7b);
-          break;
-        case 4:
-          tft->setFont(&FreeSerifBold24pt7b);
-          break;
+      case 0:
+        tft->setFont(NULL);
+        break;
+      case 1:
+        tft->setFont(&FreeSerifBold9pt7b);
+        break;
+      case 2:
+        tft->setFont(&FreeSerifBold12pt7b);
+        break;
+      case 3:
+        tft->setFont(&FreeSerifBold18pt7b);
+        break;
+      case 4:
+        tft->setFont(&FreeSerifBold24pt7b);
+        break;
       }
       return PARSER_TRUE;
     }
@@ -2186,48 +2195,48 @@ String IRtype(int decode_type)
 {
   switch (decode_type)
   {
-    case 1:
-      return F("NEC");
-      break;
-    case 2:
-      return F("SONY");
-      break;
-    case 3:
-      return F("RC5");
-      break;
-    case 4:
-      return F("RC6");
-      break;
-    case 5:
-      return F("DISH");
-      break;
-    case 6:
-      return F("SHARP");
-      break;
-    case 7:
-      return F("PANASONIC");
-      break;
-    case 8:
-      return F("JVC");
-      break;
-    case 9:
-      return F("SANYO");
-      break;
-    case 10:
-      return F("MITSUBISHI");
-      break;
-    case 11:
-      return F("SAMSUNG");
-      break;
-    case 12:
-      return F("LG");
-      break;
-    case 13:
-      return F("WHYNTER");
-      break;
-    default:
-      return F("UNKNOWN");
-      break;
+  case 1:
+    return F("NEC");
+    break;
+  case 2:
+    return F("SONY");
+    break;
+  case 3:
+    return F("RC5");
+    break;
+  case 4:
+    return F("RC6");
+    break;
+  case 5:
+    return F("DISH");
+    break;
+  case 6:
+    return F("SHARP");
+    break;
+  case 7:
+    return F("PANASONIC");
+    break;
+  case 8:
+    return F("JVC");
+    break;
+  case 9:
+    return F("SANYO");
+    break;
+  case 10:
+    return F("MITSUBISHI");
+    break;
+  case 11:
+    return F("SAMSUNG");
+    break;
+  case 12:
+    return F("LG");
+    break;
+  case 13:
+    return F("WHYNTER");
+    break;
+  default:
+    return F("UNKNOWN");
+    break;
   }
 }
 
@@ -2457,10 +2466,10 @@ int ReadTouchXY(char change_only, int *raw)
   static int pos_p = -1;
   short x, y, xf, yf;
   const unsigned short // calibration
-  calx1 = 180,
-  calx2 = 1800,
-  caly1 = 180,
-  caly2 = 1800;
+      calx1 = 180,
+      calx2 = 1800,
+      caly1 = 180,
+      caly2 = 1800;
   SPI.setFrequency(100000);
   digitalWrite(Touch_CS_pin, LOW); // touch CS low
   SPI.transfer(0x9c);              // Sends the control byte
@@ -2550,22 +2559,22 @@ int ReadTouchXY(char change_only, int *raw)
 
     switch (tft->getRotation())
     {
-      case 0:
-        xf = 240 - x;
-        yf = 320 - y;
-        break;
-      case 1:
-        xf = 320 - y;
-        yf = x;
-        break;
-      case 2:
-        xf = x;
-        yf = y;
-        break;
-      case 3:
-        xf = y;
-        yf = 240 - x;
-        break;
+    case 0:
+      xf = 240 - x;
+      yf = 320 - y;
+      break;
+    case 1:
+      xf = 320 - y;
+      yf = x;
+      break;
+    case 2:
+      xf = x;
+      yf = y;
+      break;
+    case 3:
+      xf = y;
+      yf = 240 - x;
+      break;
     }
 
     *raw = py << 16 | px;

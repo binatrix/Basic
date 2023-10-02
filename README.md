@@ -43,14 +43,21 @@ oled.align(2) 'Centered
 oled.print("Hello", 10, 10)
 oled.display()
 ```
-- Nokia RTTTL (music) functions. Buzzer needed
+- Nokia RTTTL functions. Plays music async. Buzzer needed on pin. 
     - sound.pin(pin), set the speaker pin
     - sound.play(rtttl), play the RTTTL song
     - sound.stop(), stop current playing song
+    - [soundbranch], event when music stop playing TODO!!!!
 ```
-song = "gameover:d=4,o=4,b=200:8c5,4p,8g4,4p,4e4,6a4,6b4,6a4,6g#4,6a#4,6g#4,4g4,4f4,2g4"
+song = "Star Trek:d=4,o=5,b=63:8f.,16a#,d#.6,8d6,16a#.,16g.,16c.6,f6"
 sound.pin(16)
 sound.play(song)
+```
+
+- PIN changes:
+    - Add PIP input mode for pin with internal PULLUP
+```
+io(pip, D3)
 ```
 
 ### Version 3.1
